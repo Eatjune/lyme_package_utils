@@ -10,7 +10,7 @@
 		/// <summary>
 		/// 插件配置目录,供用户使用
 		/// </summary>
-		public static string PackageConfigPath = "lyme_package_utils/Editor/Config/package.dependencies.json";
+		public static string PackageConfigPath = "lyme_package_utils/Config/package.dependencies.json";
 
 		/// <summary>
 		/// 所在包信息
