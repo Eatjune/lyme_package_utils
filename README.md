@@ -23,7 +23,8 @@
       "packageName": "com.cysharp.unitask",
       "url": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "namespaceName": "Cysharp.Threading.Tasks",
-      "typeName": "UniTask"
+      "typeName": "UniTask",
+      "assetStorePackage": false
     }
     ```
 

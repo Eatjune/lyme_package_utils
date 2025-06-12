@@ -55,10 +55,13 @@
 				var items = PackageDependenciesInitialize.GetDependencyItems();
 				foreach (var dependencyItem in items) {
 					var found = false;
-					foreach (var package in PackageDependenciesInitialize.UPMCheckRequest.Result) {
-						if (package.name == dependencyItem.packageName) {
-							found = true;
-							break;
+
+					if (!dependencyItem.assetStorePackage) {
+						foreach (var package in PackageDependenciesInitialize.UPMCheckRequest.Result) {
+							if (package.name == dependencyItem.packageName) {
+								found = true;
+								break;
+							}
 						}
 					}
 
