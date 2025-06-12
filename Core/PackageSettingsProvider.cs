@@ -10,10 +10,74 @@
 
 			var provider = new SettingsProvider($"Project/LymeGame/{packageInfo.DisplayName}", SettingsScope.Project) {
 				label = $"{packageInfo.DisplayName}",
-				guiHandler = PackageGUIHandler.GetGUIHandler
+				guiHandler = OnPackageGUIHandler
 			};
 
 			return provider;
+		}
+
+		public static void OnPackageGUIHandler(string searchContext) {
+			var packageInfo = PackageUtil.PackageInfo;
+
+			#region 包基础信息
+
+			GUILayout.Label($"包名 : {packageInfo.PackageName}", EditorStyles.boldLabel);
+			GUILayout.Label($"包路径 : {packageInfo.FilePath}", EditorStyles.boldLabel);
+			GUILayout.BeginHorizontal();
+			var hasInit = EditorPrefs.GetBool(packageInfo.PackageName, false) ? '是' : '否';
+			GUILayout.Label($"初始化 : {hasInit}", EditorStyles.boldLabel);
+
+			if (GUILayout.Button("重置初始化", GUILayout.Width(100))) {
+				if (EditorPrefs.GetBool(packageInfo.PackageName, false)) {
+					EditorPrefs.DeleteKey(packageInfo.PackageName);
+				}
+			}
+
+			GUILayout.EndHorizontal();
+
+			#endregion
+
+			GUILayout.Space(3);
+
+			#region 依赖管理
+
+			GUILayout.Label("依赖管理", EditorStyles.boldLabel);
+
+			PackageDependenciesInitialize.RequireUPMCheckRequest();
+
+			if (PackageDependenciesInitialize.UPMCheckRequest is {IsCompleted: true}) {
+				var items = PackageDependenciesInitialize.GetDependencyItems();
+				foreach (var dependencyItem in items) {
+					var found = false;
+					foreach (var package in PackageDependenciesInitialize.UPMCheckRequest.Result) {
+						if (package.name == dependencyItem.packageName) {
+							found = true;
+							break;
+						}
+					}
+
+					if (!found) {
+						found = PackageDependenciesInitialize.HasTypeInNamespace(dependencyItem.namespaceName, dependencyItem.typeName);
+					}
+
+					var hasImport = found ? "已导入" : "未导入";
+					GUILayout.Label($"{dependencyItem.name}  {hasImport}", EditorStyles.boldLabel);
+				}
+			}
+
+			GUILayout.BeginHorizontal();
+
+			//
+			if (GUILayout.Button("导入所有依赖", GUILayout.Width(100))) {
+				PackageDependenciesInitialize.ReImport(true);
+			}
+
+			GUILayout.EndHorizontal();
+
+			#endregion
+
+			//包自定义设置
+			PackageGUIHandler.GetGUIHandler(searchContext);
 		}
 
 		[SettingsProvider]
