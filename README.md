@@ -7,7 +7,10 @@
    2. 在Editor根目录下执行命令 *git clone https://github.com/Eatjune/lyme_package_utils.git*
 2. 执行RUNME.bat文件（作用：忽略本地config下所有文件的记录，防止冲突）
 
-## 包含工具
+## 注意事项
+- 请勿修改Core内代码，防止冲突
+
+## 工具目录
 
 - PackageDependenciesInitialize
   - 如果包需要依赖其他包，可以在 package.dependencies.json 内增加依赖项目
