@@ -90,8 +90,18 @@
 
 		private static void CheckDependency(DependencyItem item) {
 			if (force) {
-				Client.Add(item.url);
-				Debug.LogError($"正在从 {item.url} 拉取：{item.name},请勿重新编译...");
+				if (!item.assetStorePackage) {
+					if (!string.IsNullOrEmpty(item.url)) {
+						Client.Add(item.url);
+						Debug.LogError($"正在从 {item.url} 拉取：{item.name},请勿重新编译...");
+					} else {
+						Debug.LogError($"包：{item.name} url 为空，请检查 package.dependencies.json 配置");
+					}
+				} else {
+					UnityEditor.PackageManager.UI.Window.Open("unity://package-manager");
+					Debug.LogError($"请从Package Manager面板中手动导入包： {item.name}");
+				}
+
 				return;
 			}
 
@@ -120,7 +130,6 @@
 						} else {
 							Debug.LogError($"包：{item.name} url 为空，请检查 package.dependencies.json 配置");
 						}
-					} else {
 					}
 				} else {
 					var userAgreed = EditorUtility.DisplayDialog($"缺少依赖：{item.name}", $"检测到未安装 {item.name}。是否从Package Manager面板中手动导入包？\n需要手动下载导入", "打开", "取消");
