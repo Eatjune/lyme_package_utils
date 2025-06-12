@@ -24,7 +24,7 @@
 
 - PackageSettingsProvider
   - 在project settings内提供当前包的相关设置
-  - <b>如需使用，复制 Template/PackageGUIHandler.cs 后修改其中的GetGUIHandler函数</b>
+  - <b>如需使用，直接修改 Config/PackageGUIHandler.cs 中的 GetGUIHandler 函数</b>
 
 - PackageUtil
   - 提供包的一些工具,包括：包的相关信息等

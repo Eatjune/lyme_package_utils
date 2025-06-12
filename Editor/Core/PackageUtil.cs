@@ -8,6 +8,11 @@
 
 	public static partial class PackageUtil {
 		/// <summary>
+		/// 插件配置目录,供用户使用
+		/// </summary>
+		public static string PackageConfigPath = "lyme_package_utils/Editor/Config/package.dependencies.json";
+
+		/// <summary>
 		/// 所在包信息
 		/// </summary>
 		public static PackageUtils_LocationInfo PackageInfo {
@@ -26,6 +31,13 @@
 		public static class PackageUtil_Initialize {
 			static PackageUtil_Initialize() {
 			}
+		}
+
+		/// <summary>
+		/// 是否在assets目录下，仅开发模式
+		/// </summary>
+		public static bool InAssets() {
+			return PackageInfo.PackageJson == null;
 		}
 
 		public static bool HasInit() {
@@ -48,6 +60,7 @@
 
 			public PackageUtils_LocationInfo() {
 				PackageJson = GetPackageJson();
+				if (PackageJson == null) return;
 				PackageName = PackageJson.name;
 				DisplayName = PackageJson.displayName;
 			}
