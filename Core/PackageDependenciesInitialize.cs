@@ -36,7 +36,7 @@
 		public static List<DependencyItem> GetDependencyItems() {
 			var items = new List<DependencyItem>();
 			var packageRootPath = PackageUtil.PackageInfo.FilePath;
-			var jsonPath = $"{packageRootPath}/{PackageUtil.PackageConfigPath}";
+			var jsonPath = $"{packageRootPath}/Editor/{PackageUtil.PackageConfigPath}";
 			if (!File.Exists(jsonPath)) {
 				Debug.LogWarning($"依赖配置文件未找到：{jsonPath}");
 				return items;
@@ -58,7 +58,7 @@
 			hasChecked = true;
 
 			var packageRootPath = PackageUtil.PackageInfo.FilePath;
-			var jsonPath = $"{packageRootPath}/{PackageUtil.PackageConfigPath}";
+			var jsonPath = $"{packageRootPath}/Editor/{PackageUtil.PackageConfigPath}";
 			if (!File.Exists(jsonPath)) {
 				Debug.LogWarning($"依赖配置文件未找到：{jsonPath}");
 				return;
