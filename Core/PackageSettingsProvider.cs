@@ -7,6 +7,9 @@
 		[SettingsProvider]
 		public static SettingsProvider PackageProvider() {
 			var packageInfo = PackageUtil.PackageInfo;
+			if (packageInfo.PackageJson == null) {
+				return null;
+			}
 
 			var provider = new SettingsProvider($"Project/LymeGame/{packageInfo.DisplayName}", SettingsScope.Project) {
 				label = $"{packageInfo.DisplayName}",
@@ -18,6 +21,9 @@
 
 		public static void OnPackageGUIHandler(string searchContext) {
 			var packageInfo = PackageUtil.PackageInfo;
+			if (packageInfo.PackageJson == null) {
+				return;
+			}
 
 			#region 包基础信息
 
@@ -60,8 +66,8 @@
 						found = PackageDependenciesInitialize.HasTypeInNamespace(dependencyItem.namespaceName, dependencyItem.typeName);
 					}
 
-					var hasImport = found ? "已导入" : "未导入";
-					GUILayout.Label($"{dependencyItem.name}  {hasImport}", EditorStyles.boldLabel);
+					var hasImport = found ? "<color=green>已导入</color>" : "<color=red>未导入</color>";
+					GUILayout.Label($"{dependencyItem.name}  {hasImport}", new GUIStyle(GUI.skin.label) {richText = true});
 				}
 			}
 
