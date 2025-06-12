@@ -1,3 +1,5 @@
 
 # 忽略config配置文件夹内所有文件
-# Editor/Config/
+# Editor/Config/*.json
+# Editor/Config/*.meta
+# Editor/Config/*.cs

@@ -4,6 +4,7 @@
 
 1. 直接复制PackageUtils文件夹,并粘贴至所需使用包的Editor根目录下
 2. git clone https://github.com/Eatjune/lyme_package_utils.git
+3. 执行RUNME.bat文件（作用：忽略config下所有文件的记录，防止冲突）
 
 ## 包含工具
 
