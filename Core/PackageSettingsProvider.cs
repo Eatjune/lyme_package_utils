@@ -43,11 +43,18 @@
 
 			#endregion
 
-			GUILayout.Space(3);
+			GUILayout.Space(10);
 
 			#region 依赖管理
 
+			GUILayout.BeginHorizontal();
+
 			GUILayout.Label("依赖管理", EditorStyles.boldLabel);
+			if (GUILayout.Button("导入所有依赖", GUILayout.Width(100))) {
+				PackageDependenciesInitialize.ReImport(true);
+			}
+
+			GUILayout.EndHorizontal();
 
 			PackageDependenciesInitialize.RequireUPMCheckRequest();
 
@@ -69,19 +76,16 @@
 						found = PackageDependenciesInitialize.HasTypeInNamespace(dependencyItem.namespaceName, dependencyItem.typeName);
 					}
 
+					GUILayout.BeginHorizontal();
 					var hasImport = found ? "<color=green>已导入</color>" : "<color=red>未导入</color>";
 					GUILayout.Label($"{dependencyItem.name}  {hasImport}", new GUIStyle(GUI.skin.label) {richText = true});
+					if (GUILayout.Button("导入", GUILayout.Width(100))) {
+						PackageDependenciesInitialize.ImportPackageDependency(dependencyItem);
+					}
+
+					GUILayout.EndHorizontal();
 				}
 			}
-
-			GUILayout.BeginHorizontal();
-
-			//
-			if (GUILayout.Button("导入所有依赖", GUILayout.Width(100))) {
-				PackageDependenciesInitialize.ReImport(true);
-			}
-
-			GUILayout.EndHorizontal();
 
 			#endregion
 

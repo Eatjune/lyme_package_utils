@@ -88,20 +88,23 @@
 			}
 		}
 
+		public static void ImportPackageDependency(DependencyItem item) {
+			if (!item.assetStorePackage) {
+				if (!string.IsNullOrEmpty(item.url)) {
+					Client.Add(item.url);
+					Debug.LogError($"正在从 {item.url} 拉取：{item.name},请勿重新编译...");
+				} else {
+					Debug.LogError($"包：{item.name} url 为空，请检查 package.dependencies.json 配置");
+				}
+			} else {
+				UnityEditor.PackageManager.UI.Window.Open("unity://package-manager");
+				Debug.LogError($"请从Package Manager面板中手动导入包： {item.name}");
+			}
+		}
+
 		private static void CheckDependency(DependencyItem item) {
 			if (force) {
-				if (!item.assetStorePackage) {
-					if (!string.IsNullOrEmpty(item.url)) {
-						Client.Add(item.url);
-						Debug.LogError($"正在从 {item.url} 拉取：{item.name},请勿重新编译...");
-					} else {
-						Debug.LogError($"包：{item.name} url 为空，请检查 package.dependencies.json 配置");
-					}
-				} else {
-					UnityEditor.PackageManager.UI.Window.Open("unity://package-manager");
-					Debug.LogError($"请从Package Manager面板中手动导入包： {item.name}");
-				}
-
+				ImportPackageDependency(item);
 				return;
 			}
 
